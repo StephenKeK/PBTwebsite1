@@ -1,0 +1,739 @@
+/* Reset and base styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  background: linear-gradient(white, #ff8e2b);
+  color: #333;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+/* Dashboard container */
+.dashboard-admin-container {
+  width: 98%;
+  max-width: 1600px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-container {
+  width: 95%;
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin-top: 80px;
+}
+
+h1,
+h2 {
+  color: #2c3e50;
+  margin-bottom: 20px;
+}
+
+/* Table styles */
+.table-container {
+  overflow-x: auto;
+}
+
+.responsive-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.responsive-table th,
+.responsive-table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.responsive-table th {
+  background-color: #ff8e2b;
+  color: #fff;
+}
+
+.responsive-table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.hidden-column {
+  display: none;
+}
+
+/*Modal styling*/
+.modal {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  max-width: 500px;
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+.modal.active {
+  display: block;
+}
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: none;
+}
+.modal-overlay.active {
+  display: block;
+}
+
+.modal-title {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.action-button {
+  padding: 10px;
+  border-radius: 10px;
+  color: white;
+  max-height: 60px;
+  background-color: #ff8e2b;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  border: none;
+  cursor: pointer;
+}
+
+.action-button:hover {
+  background-color: #f29852; /* Slightly lighter shade of the original color */
+  transform: scale(1.05); /* Slightly increase the size */
+}
+
+.disabled-action-button {
+  padding: 10px;
+  border-radius: 10px;
+  color: white;
+  max-height: 60px;
+  background-color: #e4d7cc;
+  border: none;
+}
+
+.reject-button {
+  padding: 10px;
+  border-radius: 10px;
+  color: white;
+  background-color: #db3434;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  border: none;
+  cursor: pointer;
+}
+
+.reject-button:hover {
+  background-color: #e25d5d; /* Slightly lighter shade of the original color */
+  transform: scale(1.05); /* Slightly increase the size */
+}
+
+.admin-header-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.submit-button {
+  padding: 10px;
+  border-radius: 10px;
+  color: #ff8e2b;
+  max-height: 60px;
+  background-color: white;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  border: solid 2px #ff8e2b;
+  cursor: pointer;
+}
+
+.submit-button:hover {
+  background-color: #ff8e2b; /* Slightly lighter shade of the original color */
+  color: white;
+  transform: scale(1.05); /* Slightly increase the size */
+}
+
+.submit-reject-button {
+  padding: 10px;
+  border-radius: 10px;
+  color: #db3434;
+  max-height: 60px;
+  background-color: white;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  border: solid 2px #db3434;
+  cursor: pointer;
+}
+
+.submit-reject-button:hover {
+  background-color: #e2625d; /* Slightly lighter shade of the original color */
+  color: white;
+  transform: scale(1.05); /* Slightly increase the size */
+}
+
+.close-button {
+  padding: 10px;
+  border-radius: 10px;
+  color: white;
+  max-height: 60px;
+  background-color: rgba(153, 153, 153);
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  border: solid 2px rgba(153, 153, 153);
+  cursor: pointer;
+}
+
+.close-button:hover {
+  background-color: rgba(
+    153,
+    153,
+    153,
+    0.493
+  ); /* Slightly lighter shade of the original color */
+  color: white;
+  transform: scale(1.05); /* Slightly increase the size */
+}
+
+.modal-button-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: right;
+  gap: 10px;
+}
+
+/*Input Style*/
+.input-text-request {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: vertical;
+  font-size: 15px;
+}
+
+.input-title-request {
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.input-container {
+  margin-bottom: 10px;
+}
+
+/* Form styles */
+.schedule-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+
+.schedule-form label {
+  font-weight: bold;
+}
+
+.schedule-form input[type="date"],
+.schedule-form input[type="time"] {
+  padding: 5px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+/* Button styles */
+.btn {
+  background-color: #ff8e2b;
+  color: #fff;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.btn:hover {
+  background-color: #e67e22;
+}
+
+/* Message styles */
+.success-message,
+.error-message {
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 4px;
+}
+
+.success-message {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.error-message {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+/* Logout link */
+.logout-link {
+  display: inline-block;
+  margin-top: 20px;
+  color: #ff8e2b;
+  text-decoration: none;
+}
+
+.logout-link:hover {
+  text-decoration: underline;
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 768px) {
+  .dashboard-container {
+    width: 100%;
+    padding: 10px;
+  }
+
+  .responsive-table th,
+  .responsive-table td {
+    padding: 8px;
+  }
+
+  .schedule-form {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .schedule-form input[type="date"],
+  .schedule-form input[type="time"] {
+    width: 100%;
+  }
+}
+
+.btn-reminder {
+  background-color: #28a745;
+  margin-top: 10px;
+}
+
+.btn-reminder:hover {
+  background-color: #218838;
+}
+
+.reminder-form {
+  margin-top: 10px;
+}
+
+/* Updated Login Page Styles */
+.login-container {
+  background-color: white;
+  padding: 2.5rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+}
+
+.login-title {
+  text-align: center;
+  color: #ff8e2b;
+  margin-bottom: 2rem;
+  font-size: 1.8rem;
+  line-height: 1.2;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+  text-align: left;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #606770;
+  font-weight: 600;
+}
+
+.form-group input[type="email"],
+.form-group input[type="password"] {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #dddfe2;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.login-btn {
+  background-color: black;
+  color: white;
+  padding: 0.75rem;
+  border: none;
+  border-radius: 4px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 100%;
+}
+
+.login-btn:hover {
+  background-color: #333;
+}
+
+.error-message {
+  color: #c62828;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  background-color: #ffe0e0;
+  padding: 0.75rem;
+  border-radius: 5px;
+}
+
+.login-links {
+  margin-top: 1.5rem;
+}
+
+.login-links p {
+  margin: 0.5rem 0;
+}
+
+.login-container a {
+  color: #ff8e2b;
+  text-decoration: none;
+}
+
+.login-container a:hover {
+  text-decoration: underline;
+}
+
+/* New Registration Page Styles */
+.registration-container {
+  background-color: white;
+  padding: 2.5rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 500px;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.registration-container h1 {
+  color: #ff8e2b;
+  margin-bottom: 2rem;
+  font-size: 1.8rem;
+  line-height: 1.2;
+}
+
+.registration-container form {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.registration-container label {
+  text-align: left;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: #606770;
+}
+
+.registration-container input[type="text"],
+.registration-container input[type="email"],
+.registration-container input[type="password"],
+.registration-container input[type="number"] {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #dddfe2;
+  border-radius: 4px;
+  font-size: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.registration-container input[type="submit"] {
+  background-color: black;
+  color: white;
+  padding: 0.75rem;
+  border: none;
+  border-radius: 4px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.registration-container input[type="submit"]:hover {
+  background-color: #333;
+}
+
+.registration-container a {
+  color: #ff8e2b;
+  text-decoration: none;
+}
+
+.registration-container a:hover {
+  text-decoration: underline;
+}
+
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: #ffffff;
+  padding: 1rem 2rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 1000;
+}
+
+.nav-brand {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #ff8e2b;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 2rem;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-link {
+  color: #333;
+  text-decoration: none;
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.nav-link:hover {
+  color: #ff8e2b;
+  background-color: rgba(255, 142, 43, 0.1);
+}
+
+/* Responsive navbar */
+@media screen and (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    padding: 1rem;
+  }
+
+  .nav-brand {
+    margin-bottom: 1rem;
+  }
+
+  .nav-links {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+    width: 100%;
+  }
+
+  .nav-link {
+    display: block;
+    padding: 0.5rem;
+  }
+
+  .dashboard-container {
+    margin-top: 160px; /* Adjust for collapsed navbar */
+  }
+}
+
+/* Replace/Update the Timetable specific styles section with these styles */
+.timetable-container {
+  overflow-x: auto;
+  margin: 30px 0;
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.timetable {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: white;
+  margin-bottom: 20px;
+}
+
+.timetable th {
+  background-color: #ff8e2b;
+  color: white;
+  font-weight: 600;
+  padding: 15px 20px;
+  text-transform: uppercase;
+  font-size: 0.9em;
+  letter-spacing: 0.5px;
+  border: none;
+}
+
+.timetable th:first-child {
+  border-top-left-radius: 8px;
+}
+
+.timetable th:last-child {
+  border-top-right-radius: 8px;
+}
+
+.timetable td {
+  padding: 15px 20px;
+  border: 1px solid #eee;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.timetable td:first-child {
+  font-weight: 500;
+  background-color: #f8f9fa;
+  color: #444;
+}
+
+.session {
+  background-color: #fff5eb !important;
+  position: relative;
+}
+
+.session-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+}
+
+.student-name {
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 4px;
+}
+
+.change-time-btn {
+  background-color: #ff8e2b;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 8px 16px;
+  font-size: 0.85em;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.change-time-btn i {
+  font-size: 0.9em;
+}
+
+.change-time-btn:hover {
+  background-color: #e67e22;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Update the responsive adjustments for timetable */
+@media screen and (max-width: 768px) {
+  .timetable-container {
+    margin: 15px 0;
+    padding: 15px;
+    border-radius: 8px;
+  }
+
+  .timetable th,
+  .timetable td {
+    padding: 12px;
+    font-size: 0.85em;
+    min-width: 110px;
+  }
+
+  .change-time-btn {
+    padding: 6px 12px;
+    font-size: 0.8em;
+  }
+}
+
+/* Style for date input container */
+.date-range-form {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+/* Label styling */
+.date-range-form label {
+  font-weight: bold;
+  color: #333;
+  margin-right: 5px;
+}
+
+/* Date input styling */
+.date-range-form input[type="date"] {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+  background-color: #f9f9f9;
+  transition: border-color 0.3s ease-in-out;
+}
+
+.date-range-form input[type="date"]:focus {
+  border-color: #ff8e2b;
+  outline: none;
+  background-color: #fff;
+}
+
+/* Button styling */
+.date-range-form button {
+  padding: 8px 15px;
+  font-size: 14px;
+  color: #fff;
+  background-color: #ff8e2b;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.date-range-form button:hover {
+  background-color: #f29852;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .date-range-form {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .date-range-form label {
+    margin-bottom: 5px;
+  }
+}
