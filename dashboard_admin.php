@@ -23,6 +23,7 @@ if (!isset($_SESSION['admin_logged_in'])) {
 $result_status_0 = $conn->query("SELECT c.*,status_name,parent_name,child_name FROM child_course c LEFT JOIN status s ON c.status_id = s.id LEFT JOIN parents p ON c.parent_id = p.id WHERE c.status_id = 0 AND c.start_datetime > NOW()");
 $result_status_neg1 = $conn->query("SELECT c.*,status_name,parent_name,child_name FROM child_course c LEFT JOIN status s ON c.status_id = s.id LEFT JOIN parents p ON c.parent_id = p.id WHERE c.status_id = -1 AND c.start_datetime > NOW()");
 $result_status_1 = $conn->query("SELECT c.*,status_name,parent_name,child_name FROM child_course c LEFT JOIN status s ON c.status_id = s.id LEFT JOIN parents p ON c.parent_id = p.id WHERE c.status_id = 1 AND c.start_datetime > NOW()");
+
 $result_all = $conn->query("SELECT c.*,status_name,parent_name,child_name FROM child_course c LEFT JOIN status s ON c.status_id = s.id LEFT JOIN parents p ON c.parent_id = p.id");
 
 //Get Parent
@@ -91,7 +92,9 @@ $parent_list = $conn->query("SELECT * FROM parents");
                     <td><?= $row['end_datetime'] ?></td>
                     <td>
                     <button class="reject-button" onclick="openDeleteModal(<?= htmlspecialchars(json_encode($row)) ?>) ">Delete</button>
-                    </td>
+                    <button class="action-button" onclick="openUpdateModal(<?= htmlspecialchars(json_encode($row)) ?>) ">Update</button>
+
+                </td>
                 </tr>
                 <?php endwhile; ?>
             </tbody>
@@ -134,7 +137,6 @@ $parent_list = $conn->query("SELECT * FROM parents");
                     <td>
                         <button class="reject-button" onclick="openRejectModal(<?= htmlspecialchars(json_encode($row)) ?>) ">Reject</button>
                         <button class="action-button" onclick="openApproveModal(<?= htmlspecialchars(json_encode($row)) ?>) ">Approve</button>
-
                     </td>
                 </tr>
                 <?php endwhile; ?>
@@ -228,13 +230,14 @@ $parent_list = $conn->query("SELECT * FROM parents");
 
 <div class="modal-overlay" id="delete-modalOverlay" onclick="closeDeleteModal()"></div>
 
+<div class="modal-overlay" id="update-modalOverlay" onclick="closeUpdateModal()"></div>
+
 <div class="modal-overlay" id="scheduler-modalOverlay" onclick="closeSchedulerModal()"></div>
 
 <!-- Modal -->
 <div class="modal" id="create-modal">
     <form id="modifyForm" action="course_management.php" method="POST">
         <p class="modal-title">Create the new course</p>
-        <input type="hidden" name="status-id" id="statusId" value="1">
         <input type="hidden" name="action" value="create">  
         <div class="input-container">
             <label for="parentSelect" class="input-title-request">Select Parent: </label>
@@ -265,6 +268,33 @@ $parent_list = $conn->query("SELECT * FROM parents");
 
         <div class="modal-button-container">
             <button type="button" onclick="closeModal()" class="close-button">Close</button>
+            <button type="submit" class="submit-button">Submit</button>
+        </div>             
+    </form>
+</div>
+
+<div class="modal" id="update-modal">
+    <form id="modifyForm" action="course_management.php" method="POST">
+        <p class="modal-title">Update course</p>
+        <input type="hidden" name="action" value="update">  
+        <input type="hidden" name="course_id" id="updateCourseId"> 
+        <div class="input-container">
+            <label for="courseName" class="input-title-request">Course Name</label>
+            <input type="text" name="course_name" id="updateCourseName" class="input-text-request" required>
+        </div>
+    
+        <div class="input-container">
+            <label for="courseStartDatetime" class="input-title-request">Start Date & Time</label>
+            <input type="datetime-local" name="start_datetime" id="updateCoureStartDatetime" class="input-text-request" required>
+        </div>
+
+        <div class="input-container">
+            <label for="courseEndDatetime" class="input-title-request">End Date & Time</label>
+            <input type="datetime-local" name="end_datetime" id="updateCourseEndDatetime" class="input-text-request" required>
+        </div>
+
+        <div class="modal-button-container">
+            <button type="button" onclick="closeUpdateModal()" class="close-button">Close</button>
             <button type="submit" class="submit-button">Submit</button>
         </div>             
     </form>
@@ -369,6 +399,15 @@ document.addEventListener("DOMContentLoaded", function() {
         document.getElementById('delete-modalOverlay').classList.add('active');
     }
 
+    function openUpdateModal(rowData) {
+        document.getElementById('updateCourseId').value = rowData.id;
+        document.getElementById('updateCourseName').value = rowData.course_name;
+        document.getElementById('updateCoureStartDatetime').value = rowData.start_datetime;
+        document.getElementById('updateCourseEndDatetime').value = rowData.end_datetime;
+        document.getElementById('update-modal').classList.add('active');
+        document.getElementById('update-modalOverlay').classList.add('active');
+    }
+
     function openApproveModal(rowData) {
         document.getElementById('approveCourseId').value = rowData.id;
         document.getElementById('startDatetime').value = rowData.request_start_datetime;
@@ -404,6 +443,11 @@ document.addEventListener("DOMContentLoaded", function() {
         document.getElementById('approve-modalOverlay').classList.remove('active');
     }
 
+    function closeUpdateModal() {
+        document.getElementById('update-modal').classList.remove('active');
+        document.getElementById('update-modalOverlay').classList.remove('active');
+    }
+
     function closeRejectModal() {
         document.getElementById('reject-modal').classList.remove('active');
         document.getElementById('reject-modalOverlay').classList.remove('active');
@@ -414,10 +458,35 @@ document.addEventListener("DOMContentLoaded", function() {
         document.getElementById('scheduler-modalOverlay').classList.remove('active');
     }
 
+    function setMinDate() {
+        const today = new Date();
+        today.setDate(today.getDate() + 1);
+        const year = today.getFullYear();
+        const month = String(today.getMonth() + 1).padStart(2, '0');
+        const day =  String (today.getDate().padStart(2,'0'));
+
+        const minDate = '${year}-${month}-${day}';
+        dateInput.min = minDate;
+    } 
+    
+
+    // Validate the selected date
+    document.getElementById("coureStartDatetime").addEventListener('change', () => {
+      const selectedDate = new Date(document.getElementById("coureStartDatetime").value);
+      const minValidDate = new Date(); // Current date
+      minValidDate.setDate(minValidDate.getDate() + 1); // Add one day to current date
+
+      if (selectedDate < minValidDate) {
+        alert("Please select a date greater than today");
+        document.getElementById("coureStartDatetime").value=null;
+      }
+    });
 
     window.showTab = showTab; // Expose functions to global scope if they are called inline
     window.openCreateModal = openCreateModal;
     window.closeCreateModal = closeCreateModal;
+    window.openUpdateModal = openUpdateModal;
+    window.closeUpdateModal = closeUpdateModal;
     window.openDeleteModal = openDeleteModal;
     window.closeDeleteModal = closeDeleteModal;
     window.openApproveModal = openApproveModal;
